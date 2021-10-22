@@ -93,6 +93,50 @@ function formatHeaderPanel(city, data) {
 
 function formatOneCallData(city, data) {
     formatHeaderPanel(city, data.daily[0]);
+
+    // Display 5-day forecast
+    let forecastEl = $("#forecast");
+    forecastEl.html(""); // Clear out the old info
+    if (!forecastEl.hasClass("row")) {
+        forecastEl.addClass("row");
+    }
+
+    for (let i = 1; i < 6; i++) {
+        let containerEl = $("<div>");
+        containerEl.addClass("col-2");
+
+        let cardEl = $("<div>");
+        cardEl.addClass("card");
+
+        let dateEl = $("<div>");
+        dateEl.html(formatDate(data.daily[i].dt));
+        dateEl.addClass("card-header");
+        dateEl.addClass("shrink");
+        cardEl.append(dateEl);
+        
+        let iconEl = $("<img>");
+        iconEl.attr("src", getIconLocation(data.daily[i].weather[0].icon, "@2x"));
+        iconEl.addClass("shrink");
+        cardEl.append(iconEl);
+
+        let tempEl = $("<div>");
+        tempEl.html("Temp: " + data.daily[i].temp.max + "&deg;F");
+        tempEl.addClass("shrink");
+        cardEl.append(tempEl);
+
+        let windEl = $("<div>");
+        windEl.html("Wind: " + data.daily[i].wind_speed + " MPH");
+        windEl.addClass("shrink");
+        cardEl.append(windEl);
+
+        let humidEl = $("<div>");
+        humidEl.html("Humidity: " + data.daily[i].humidity + "%");
+        humidEl.addClass("shrink");
+        cardEl.append(humidEl);
+
+        containerEl.append(cardEl);
+        forecastEl.append(containerEl);
+    }
 }
 
 function getIconLocation(icon, size) {
