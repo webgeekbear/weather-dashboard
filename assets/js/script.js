@@ -1,5 +1,4 @@
-var appid = "&appid=1353e67f03e4a02c4d6d35efc4c2e994";
-var nonid = "&appid=43307f36c133c1b4d80feb3644b2ab3e"; // Instructor's app ID (just in case)
+var appid = "&appid=1353e67f03e4a02c4d6d35efc4c2e994";  // App ID for Open weather API
 
 var cities = [];
 
@@ -193,9 +192,6 @@ function getIconLocation(icon, size) {
 
     return "http://openweathermap.org/img/wn/" + icon + size + ".png";
 }
-
-var userFormEl = document.getElementById("user-form");
-var cityEl = document.getElementById("city");
 
 $("#user-form").on("submit", function (event) {
     event.preventDefault();
