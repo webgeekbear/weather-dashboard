@@ -16,6 +16,7 @@ function loadCities() {
 
     displayCityButtons();
 }
+
 function addCityButton(city) {
     // If city not found in array
     if (cities.indexOf(city) === -1) {
@@ -63,18 +64,8 @@ function getLocationData(city) {
                 getOneCallData(city, data.coord.lat, data.coord.lon);
                 addCityButton(city);
             } else {
-                alert("Could not find \"" + city + "\"");
-                // let cityEl = $("#city");
-                // let textEl = $("<p>");
-                // textEl.val("Could not find " + city);
-                // cityEl.append(textEl);
-                // setTimeout(function () {
-                //     textEl.remove();
-                // }, 1 * 1000);
+                swal("Error", "Could not find a city named \"" + city + "\"", "error");
             }
-        })
-        .catch(function (error) {
-            alert(error.message);
         });
 }
 
@@ -84,13 +75,18 @@ function getOneCallData(city, lat, lon) {
     let apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=current,minute,hourly,alerts" + appid + "&units=imperial";
     fetch(apiUrl)
         .then(function (response) {
-            return response.json();
+            if (response.ok) {
+                return response.json();
+            }
+            return null;
         })
         .then(function (data) {
-            formatOneCallData(city, data);
-        })
-        .catch(function (error) {
-            alert(error.message);
+            if (data) {
+                formatOneCallData(city, data);
+            }
+            else {
+                swal("Error", "Cannot connect to the internet.");
+            }
         });
 }
 
@@ -213,9 +209,13 @@ $("#user-form").on("submit", function (event) {
     event.preventDefault();
 
     let cityEl = $("#city");
-    let city = cityEl.val();
+    let city = cityEl.val().trim();
     cityEl.val(""); // Clear out city information
-    getLocationData(city);
+    if (city) {
+        getLocationData(city);
+    } else {
+        swal("Error", "Please enter a city name.", "error");
+    }
 });
 
 $("#city-buttons").on("click", function (event) {
