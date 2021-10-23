@@ -42,7 +42,7 @@ function displayCityButtons() {
         newButton.html(cities[i]);
         newButton.attr("data-city", cities[i]);
         newButton.addClass("btn");
-        newButton.addClass("btn-primary");
+        newButton.addClass("dark");
 
         cityButtonsEl.append(newButton);
     }
@@ -183,7 +183,7 @@ function formatOneCallData(city, data) {
 
         let cardEl = $("<div>");
         cardEl.addClass("card");
-        cardEl.addClass("bg-dark");
+        cardEl.addClass("dark");
 
         let dateEl = $("<div>");
         dateEl.html(formatDate(data.daily[i].dt));
