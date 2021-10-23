@@ -1,7 +1,21 @@
-var appid = "&appid=1353e67f03e4a02c4d6d35efc4c2e994";  // App ID for Open weather API
+var appid = "&appid=1353e67f03e4a02c4d6d35efc4c2e994"; // App ID for Open weather API
 
 var cities = [];
 
+loadCities();
+
+function saveCities() {
+    localStorage.setItem("cities", JSON.stringify(cities));
+}
+
+function loadCities() {
+    cities = JSON.parse(localStorage.getItem("cities"));
+    if (!cities) {
+        cities = [];
+    }
+
+    displayCityButtons();
+}
 function addCityButton(city) {
     // If city not found in array
     if (cities.indexOf(city) === -1) {
@@ -13,6 +27,8 @@ function addCityButton(city) {
             cities.pop(); // Remove the last city
         }
     }
+
+    saveCities();
     displayCityButtons();
 }
 
@@ -196,10 +212,10 @@ function getIconLocation(icon, size) {
 $("#user-form").on("submit", function (event) {
     event.preventDefault();
 
-    let locEl = $("#city");
-    let loc = locEl.val();
-    locEl.val(""); // Clear out city information
-    getLocationData(loc);
+    let cityEl = $("#city");
+    let city = cityEl.val();
+    cityEl.val(""); // Clear out city information
+    getLocationData(city);
 });
 
 $("#city-buttons").on("click", function (event) {
