@@ -97,6 +97,45 @@ function formatDate(date) {
 }
 
 function formatHeaderPanel(city, data) {
+    let cityContainerEl = $("#city-container");
+    cityContainerEl.html("");
+
+    let cityCardEl = $("<div>");
+    cityCardEl.addClass("card");
+
+    let headerCityInfoEl = $("<h3>");
+    headerCityInfoEl.attr("id", "city-info");
+    headerCityInfoEl.addClass("card-header");
+    cityCardEl.append(headerCityInfoEl);
+
+    let headerCityTempEl = $("<div>");
+    headerCityTempEl.attr("id", "city-temp");
+    cityCardEl.append(headerCityTempEl);
+
+    let headerCityWindEl = $("<div>");
+    headerCityWindEl.attr("id", "city-wind");
+    cityCardEl.append(headerCityWindEl);
+
+    let headerCityHumidEl = $("<div>");
+    headerCityHumidEl.attr("id", "city-humid");
+    cityCardEl.append(headerCityHumidEl);
+
+    let headerCityUviEl = $("<div>");
+    headerCityUviEl.attr("id", "city-uvi");
+    cityCardEl.append(headerCityUviEl);
+    
+    cityContainerEl.append(cityCardEl);
+
+    let headerForecastEl = $("<h3>");
+    headerForecastEl.html("5-day forecast");
+
+    let headerRowEl = $("<div>");
+    headerRowEl.attr("id", "forecast");
+    headerRowEl.addClass("row");
+    headerForecastEl.append(headerRowEl);
+    
+    cityContainerEl.append(headerForecastEl);
+
     // Display city header info (city name, date, weather icon)
     let cityInfoEl = $("#city-info");
     cityInfoEl.text(city + " (" + formatDate(data.dt) + ")");
