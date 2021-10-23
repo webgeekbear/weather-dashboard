@@ -1,8 +1,23 @@
-.bg-success,
-.bg-danger {
-    color: white;
+.bg-danger,
+.bg-dark,
+.bg-success {
+  color: white;
+}
+
+.btn {
+  width: 100%;
+  margin: 5px;
+}
+
+.form-input {
+  width: 100%;
 }
 
 .shrink {
-    font-size: 20px;
+  font-size: 20px;
+}
+
+.shrink-icon {
+  height: 50px;
+  width: 50px;
 }

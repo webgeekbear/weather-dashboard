@@ -1,16 +1,62 @@
 var appid = "&appid=1353e67f03e4a02c4d6d35efc4c2e994";
 var nonid = "&appid=43307f36c133c1b4d80feb3644b2ab3e"; // Instructor's app ID (just in case)
 
+var cities = [];
+
+function addCityButton(city) {
+    // If city not found in array
+    if (cities.indexOf(city) === -1) {
+        cities.unshift(city); // Add it at beginning
+    }
+
+    if (cities.length > 10) {
+        for (let i = 10; i < cities.length; i++) {
+            cities.pop(); // Remove the last city
+        }
+    }
+    displayCityButtons();
+}
+
+function displayCityButtons() {
+    let cityButtonsEl = $("#city-buttons");
+    cityButtonsEl.html(""); // Remove any existing buttons
+
+    for (let i = 0; i < cities.length; i++) {
+        let newButton = $("<button>");
+        newButton.html(cities[i]);
+        newButton.attr("data-city", cities[i]);
+        newButton.addClass("btn");
+        newButton.addClass("btn-primary");
+
+        cityButtonsEl.append(newButton);
+    }
+}
+
 function getLocationData(city) {
     // Use this call to get the latitude and longitude of the city.  This is required by the one call api.
     let apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + appid + "&units=imperial";
 
     fetch(apiUrl)
         .then(function (response) {
-            return response.json();
+            if (response.ok) {
+                return response.json();
+            }
+            return null;
         })
         .then(function (data) {
-            getOneCallData(city, data.coord.lat, data.coord.lon);
+            if (data) {
+                getOneCallData(city, data.coord.lat, data.coord.lon);
+                addCityButton(city);
+            } else {
+                alert("Could not find \"" + city + "\"");
+                // let cityEl = $("#city");
+                // let textEl = $("<p>");
+                // textEl.val("Could not find " + city);
+                // cityEl.append(textEl);
+                // setTimeout(function () {
+                //     textEl.remove();
+                // }, 1 * 1000);
+            }
         })
         .catch(function (error) {
             alert(error.message);
@@ -107,16 +153,17 @@ function formatOneCallData(city, data) {
 
         let cardEl = $("<div>");
         cardEl.addClass("card");
+        cardEl.addClass("bg-dark");
 
         let dateEl = $("<div>");
         dateEl.html(formatDate(data.daily[i].dt));
         dateEl.addClass("card-header");
         dateEl.addClass("shrink");
         cardEl.append(dateEl);
-        
+
         let iconEl = $("<img>");
         iconEl.attr("src", getIconLocation(data.daily[i].weather[0].icon, "@2x"));
-        iconEl.addClass("shrink");
+        iconEl.addClass("shrink-icon");
         cardEl.append(iconEl);
 
         let tempEl = $("<div>");
@@ -146,3 +193,15 @@ function getIconLocation(icon, size) {
 
     return "http://openweathermap.org/img/wn/" + icon + size + ".png";
 }
+
+var userFormEl = document.getElementById("user-form");
+var cityEl = document.getElementById("city");
+
+$("#user-form").on("submit", function (event) {
+    event.preventDefault();
+
+    let locEl = $("#city");
+    let loc = locEl.val();
+    locEl.val(""); // Clear out city information
+    getLocationData(loc);
+});
