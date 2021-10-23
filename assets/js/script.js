@@ -205,3 +205,8 @@ $("#user-form").on("submit", function (event) {
     locEl.val(""); // Clear out city information
     getLocationData(loc);
 });
+
+$("#city-buttons").on("click", function (event) {
+    let city = $(event.target).attr("data-city");
+    getLocationData(city);
+});
