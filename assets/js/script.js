@@ -84,7 +84,7 @@ function getOneCallData(city, lat, lon) {
             if (data) {
                 formatOneCallData(city, data);
             } else {
-                swal("Error", "Cannot connect to the internet.");
+                swal("Error", "Cannot connect to the internet.", "error");
             }
         });
 }
