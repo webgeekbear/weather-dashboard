@@ -1,0 +1,27 @@
+.bg-danger,
+.bg-success {
+  color: white;
+}
+
+.btn {
+  width: 100%;
+  margin: 5px;
+}
+
+.dark {
+  color: white;
+  background-color: #6c757d;
+}
+
+.form-input {
+  width: 100%;
+}
+
+.shrink {
+  font-size: 20px;
+}
+
+.shrink-icon {
+  height: 50px;
+  width: 50px;
+}
