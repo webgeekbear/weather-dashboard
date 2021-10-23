@@ -239,5 +239,7 @@ $("#user-form").on("submit", function (event) {
 
 $("#city-buttons").on("click", function (event) {
     let city = $(event.target).attr("data-city");
-    getLocationData(city);
+    if (city) {
+        getLocationData(city);
+    }
 });
